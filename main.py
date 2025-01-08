@@ -71,9 +71,9 @@ if __name__ == "__main__":
     # ========================================================================================
     with open("./ardunio/ardunio.ino", "w") as ino_file:
         ino_file.write("// Macros pour simplifier le code\n")
-        ino_file.write("#define ATTEND(ms) delay(ms)\n")
-        ino_file.write("#define ALLUME_LED(pin) digitalWrite(pin, HIGH)\n")
-        ino_file.write("#define ETEINT_LED(pin) digitalWrite(pin, LOW)\n")
+        ino_file.write("#define ATTENDRE(ms) delay(ms)\n")
+        ino_file.write("#define ALLUMER(pin) digitalWrite(pin, HIGH)\n")
+        ino_file.write("#define ETEINDRE(pin) digitalWrite(pin, LOW)\n")
         ino_file.write("#define LIRE(pin) digitalRead(pin)\n\n")
 
         ino_file.write(f"int currentState = {id_to_int.get(first_loop_node, 0)};\n\n")

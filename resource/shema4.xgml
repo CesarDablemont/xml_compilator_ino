@@ -48,7 +48,7 @@
 		</section>
 		<section name="node">
 			<attribute key="id" type="int">2</attribute>
-			<attribute key="label" type="String">AllumeLed pin 1</attribute>
+			<attribute key="label" type="String">Allumer pin 1</attribute>
 			<section name="graphics">
 				<attribute key="x" type="double">390.0</attribute>
 				<attribute key="y" type="double">390.0</attribute>
@@ -60,7 +60,7 @@
 				<attribute key="outline" type="String">#000000</attribute>
 			</section>
 			<section name="LabelGraphics">
-				<attribute key="text" type="String">AllumeLed pin 1</attribute>
+				<attribute key="text" type="String">Allumer pin 1</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
 				<attribute key="anchor" type="String">c</attribute>
@@ -68,7 +68,7 @@
 		</section>
 		<section name="node">
 			<attribute key="id" type="int">3</attribute>
-			<attribute key="label" type="String">EteintLed pin 1</attribute>
+			<attribute key="label" type="String">Eteindre pin 1</attribute>
 			<section name="graphics">
 				<attribute key="x" type="double">570.0</attribute>
 				<attribute key="y" type="double">390.0</attribute>
@@ -80,7 +80,7 @@
 				<attribute key="outline" type="String">#000000</attribute>
 			</section>
 			<section name="LabelGraphics">
-				<attribute key="text" type="String">EteintLed pin 1</attribute>
+				<attribute key="text" type="String">Eteindre pin 1</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
 				<attribute key="anchor" type="String">c</attribute>
@@ -108,7 +108,7 @@
 		</section>
 		<section name="node">
 			<attribute key="id" type="int">5</attribute>
-			<attribute key="label" type="String">AllumeLed pin 2</attribute>
+			<attribute key="label" type="String">Allumer pin 2</attribute>
 			<section name="graphics">
 				<attribute key="x" type="double">480.0</attribute>
 				<attribute key="y" type="double">600.0</attribute>
@@ -120,7 +120,7 @@
 				<attribute key="outline" type="String">#000000</attribute>
 			</section>
 			<section name="LabelGraphics">
-				<attribute key="text" type="String">AllumeLed pin 2</attribute>
+				<attribute key="text" type="String">Allumer pin 2</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
 				<attribute key="anchor" type="String">c</attribute>
@@ -148,7 +148,7 @@
 		</section>
 		<section name="node">
 			<attribute key="id" type="int">7</attribute>
-			<attribute key="label" type="String">EteintLed pin 2</attribute>
+			<attribute key="label" type="String">Eteindre pin 2</attribute>
 			<section name="graphics">
 				<attribute key="x" type="double">479.1</attribute>
 				<attribute key="y" type="double">840.0</attribute>
@@ -160,7 +160,7 @@
 				<attribute key="outline" type="String">#000000</attribute>
 			</section>
 			<section name="LabelGraphics">
-				<attribute key="text" type="String">EteintLed pin 2</attribute>
+				<attribute key="text" type="String">Eteindre pin 2</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
 				<attribute key="anchor" type="String">c</attribute>
@@ -168,7 +168,7 @@
 		</section>
 		<section name="node">
 			<attribute key="id" type="int">8</attribute>
-			<attribute key="label" type="String">Attend 500ms</attribute>
+			<attribute key="label" type="String">Attendre 500ms</attribute>
 			<section name="graphics">
 				<attribute key="x" type="double">479.1</attribute>
 				<attribute key="y" type="double">930.0</attribute>
@@ -180,7 +180,7 @@
 				<attribute key="outline" type="String">#000000</attribute>
 			</section>
 			<section name="LabelGraphics">
-				<attribute key="text" type="String">Attend 500ms</attribute>
+				<attribute key="text" type="String">Attendre 500ms</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
 				<attribute key="anchor" type="String">c</attribute>
@@ -390,6 +390,10 @@
 						<attribute key="y" type="double">930.0</attribute>
 					</section>
 				</section>
+			</section>
+			<section name="edgeAnchor">
+				<attribute key="xTarget" type="double">-0.9944933299676545</attribute>
+				<attribute key="yTarget" type="double">-1.0007236539433242</attribute>
 			</section>
 			<section name="LabelGraphics">
 				<attribute key="text" type="String">False</attribute>

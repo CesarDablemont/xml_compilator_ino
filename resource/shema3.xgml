@@ -92,7 +92,7 @@
 		</section>
 		<section name="node">
 			<attribute key="id" type="int">4</attribute>
-			<attribute key="label" type="String">Attend 100ms</attribute>
+			<attribute key="label" type="String">Attendre 100ms</attribute>
 			<section name="graphics">
 				<attribute key="x" type="double">750.0</attribute>
 				<attribute key="y" type="double">540.0</attribute>
@@ -104,7 +104,7 @@
 				<attribute key="outline" type="String">#000000</attribute>
 			</section>
 			<section name="LabelGraphics">
-				<attribute key="text" type="String">Attend 100ms</attribute>
+				<attribute key="text" type="String">Attendre 100ms</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
 				<attribute key="anchor" type="String">c</attribute>
@@ -256,8 +256,8 @@
 				<attribute key="configuration" type="String">AutoFlippingLabel</attribute>
 				<attribute key="contentWidth" type="double">33.34375</attribute>
 				<attribute key="contentHeight" type="double">18.701171875</attribute>
-				<attribute key="model"/>
-				<attribute key="position"/>
+				<attribute key="model" type="String">six_pos</attribute>
+				<attribute key="position" type="String">tail</attribute>
 			</section>
 		</section>
 		<section name="edge">

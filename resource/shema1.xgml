@@ -8,7 +8,7 @@
 		<attribute key="directed" type="int">1</attribute>
 		<section name="node">
 			<attribute key="id" type="int">0</attribute>
-			<attribute key="label" type="String">Attend 2s</attribute>
+			<attribute key="label" type="String">Attendre 2s</attribute>
 			<section name="graphics">
 				<attribute key="x" type="double">0.0</attribute>
 				<attribute key="y" type="double">-330.0</attribute>
@@ -20,7 +20,7 @@
 				<attribute key="outline" type="String">#000000</attribute>
 			</section>
 			<section name="LabelGraphics">
-				<attribute key="text" type="String">Attend 2s</attribute>
+				<attribute key="text" type="String">Attendre 2s</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
 				<attribute key="anchor" type="String">c</attribute>

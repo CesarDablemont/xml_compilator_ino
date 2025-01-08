@@ -3,9 +3,9 @@ import re  # Pour les regex
 # Dictionnaire de fonction
 keyword_to_function = {
     # fonction ardunio :
-    "Attend": "ATTEND",
-    "AllumeLed": "ALLUME_LED",  # (digital)
-    "EteintLed": "ETEINT_LED",  # (digital)
+    "Attendre": "ATTENDRE",
+    "Allumer": "ALLUMER",  # (digital)
+    "Eteindre": "ETEINDRE",  # (digital)
     "Lire": "LIRE",  # (digital)
     # fonction custom :
     "Stop": "stop",
@@ -68,7 +68,7 @@ def interpret_command_with_macros(node_label):
     if command in keyword_to_function:
         macro = keyword_to_function[command]
 
-        if macro == "ATTEND" and params:
+        if macro == "ATTENDRE" and params:
             match = re.match(r"(\d+)([a-zA-Z]+)", params[0])
             if match:
                 value = int(match.group(1))
@@ -77,7 +77,7 @@ def interpret_command_with_macros(node_label):
                 value *= multiplier
                 return f"{macro}({value});"
 
-        elif macro in ["ALLUME_LED", "ETEINT_LED"] and len(params) >= 2:
+        elif macro in ["ALLUMER", "ETEINDRE"] and len(params) >= 2:
             pin = params[1] if params[0].lower() == "pin" else params[0]
             return f"{macro}({pin});"
 
@@ -119,7 +119,7 @@ def search_pinMode(loop_nodes, diamond_nodes):
         if command in keyword_to_function:
             macro = keyword_to_function[command]
 
-            if macro in ["ALLUME_LED", "ETEINT_LED"] and len(params) >= 2:
+            if macro in ["ALLUMER", "ETEINDRE"] and len(params) >= 2:
                 pin = params[1] if params[0].lower() == "pin" else params[0]
                 command = f"  pinMode({pin}, OUTPUT);\n"
                 if not command in commandList:

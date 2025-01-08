@@ -1,7 +1,7 @@
 // Macros pour simplifier le code
-#define ATTEND(ms) delay(ms)
-#define ALLUME_LED(pin) digitalWrite(pin, HIGH)
-#define ETEINT_LED(pin) digitalWrite(pin, LOW)
+#define ATTENDRE(ms) delay(ms)
+#define ALLUMER(pin) digitalWrite(pin, HIGH)
+#define ETEINDRE(pin) digitalWrite(pin, LOW)
 #define LIRE(pin) digitalRead(pin)
 
 int currentState = 6;
@@ -24,32 +24,32 @@ void loop() {
 
   switch (currentState) {
     case 1:
-      Serial.println("AllumeLed pin 1");
-      ALLUME_LED(1);
+      Serial.println("Allumer pin 1");
+      ALLUMER(1);
       currentState = 7;
       break;
 
     case 2:
-      Serial.println("EteintLed pin 1");
-      ETEINT_LED(1);
+      Serial.println("Eteindre pin 1");
+      ETEINDRE(1);
       currentState = 7;
       break;
 
     case 3:
-      Serial.println("AllumeLed pin 2");
-      ALLUME_LED(2);
+      Serial.println("Allumer pin 2");
+      ALLUMER(2);
       currentState = 8;
       break;
 
     case 4:
-      Serial.println("EteintLed pin 2");
-      ETEINT_LED(2);
+      Serial.println("Eteindre pin 2");
+      ETEINDRE(2);
       currentState = 5;
       break;
 
     case 5:
-      Serial.println("Attend 500ms");
-      ATTEND(500);
+      Serial.println("Attendre 500ms");
+      ATTENDRE(500);
       currentState = 6;
       break;
 
