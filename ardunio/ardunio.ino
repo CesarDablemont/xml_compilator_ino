@@ -65,8 +65,8 @@ void loop() {
       break;
 
     case 7:
-      Serial.println("Condition: U1 < 10");
-      if (distance(U1) < 10) { currentState = 2;}
+      Serial.println("Condition: U1 < 15");
+      if (distance(U1) < 15) { currentState = 2;}
       else { currentState = 1;}
       break;
 

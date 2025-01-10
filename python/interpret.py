@@ -31,6 +31,8 @@ def interpret_assignment_opperator(node_label):
         value = match.group(3)  # La valeur après '='
         return f"{variable} {opperator} {value}"
 
+    # TODO lever l'erreur dans le else
+
 
 def interpret_test_opperator(node_label):
 
@@ -75,8 +77,9 @@ def interpret_command_with_macros(node_label):
 
         elif macro in ["stop", "avance"]:
             return f"{macro}();"
-
-    return f"// Commande inconnue: {node_label}"
+    else:
+        print(f"[Warning] Commande inconnue: {node_label}")
+        return f"// Commande inconnue: {node_label}"
 
 
 def interpret_condition(node_label):
@@ -100,10 +103,10 @@ def interpret_condition(node_label):
     return node_label
 
 
-def search_pinMode(loop_nodes, diamond_nodes):
+def search_pinMode(basic_nodes, condition_nodes):
     commandList = []
 
-    for node_id, node_label in loop_nodes.items():
+    for node_id, node_label in basic_nodes.items():
         parts = node_label.split()
         command = parts[0]
         params = parts[1:] if len(parts) > 1 else []
@@ -117,7 +120,7 @@ def search_pinMode(loop_nodes, diamond_nodes):
                 if not command in commandList:
                     commandList.append(command)
 
-    for node_id, node_label in diamond_nodes.items():
+    for node_id, node_label in condition_nodes.items():
         parts = node_label.split()
         command = parts[0]
         params = parts[1:] if len(parts) > 1 else []
@@ -141,6 +144,7 @@ def interpret_init_variable(setup_nodes):
     for node_id, node_label in setup_nodes.items():
         parts = node_label.split(",")
         params = [p.strip() for p in parts]
+        match = re.match(r"([a-zA-Z0-9_]+)\s*=\s*(.+)", node_label)
 
         if params[0].lower().startswith("ultrason") and len(params) >= 3:
             match_name = re.search(
@@ -150,7 +154,7 @@ def interpret_init_variable(setup_nodes):
                 sensorName = match_name.group(1)
                 sensors.append(sensorName)
             else:
-                Warning(f"Nom de capteur manquant dans '{node_label}'")
+                print(f"[Warning] Nom de capteur manquant dans '{node_label}'")
                 continue
 
             # Récupérer les broches Trig et Echo
@@ -172,13 +176,11 @@ def interpret_init_variable(setup_nodes):
                     f"  pinMode({trigPin}, OUTPUT);\n  pinMode({echoPin}, INPUT);\n"
                 )
             else:
-                Warning(f"Paramètres 'Trig' ou 'Echo' manquants dans '{node_label}'")
+                print(
+                    f"[Warning] Paramètres 'Trig' ou 'Echo' manquants dans '{node_label}'"
+                )
 
-        else:
-            Warning(f"\"{node_label}\" n'a pas été compris et n'a pas été compilé\n")
-
-        match = re.match(r"([a-zA-Z0-9_]+)\s*=\s*(.+)", node_label)
-        if match:
+        elif match:
             variable = match.group(1)  # Le nom de la variable
             value = match.group(2)  # La valeur après '='
 
@@ -194,6 +196,8 @@ def interpret_init_variable(setup_nodes):
 
         else:
             # Si aucune cas correspond
-            Warning('"{node_label}" n\'a pas etait compris et donc non compilé\n')
+            print(
+                f'[Warning] "{node_label}" n\'a pas etait compris et donc non compilé\n'
+            )
 
     return codesList, pinModes

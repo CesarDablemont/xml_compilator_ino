@@ -24,7 +24,7 @@
 		</section>
 		<section name="node">
 			<attribute key="id" type="int">1</attribute>
-			<attribute key="label" type="String">U1 &lt; 10</attribute>
+			<attribute key="label" type="String">U1 &lt; 15</attribute>
 			<section name="graphics">
 				<attribute key="x" type="double">570.0</attribute>
 				<attribute key="y" type="double">300.0</attribute>
@@ -36,10 +36,10 @@
 				<attribute key="outline" type="String">#000000</attribute>
 			</section>
 			<section name="LabelGraphics">
-				<attribute key="text" type="String">U1 &lt; 10</attribute>
+				<attribute key="text" type="String">U1 &lt; 15</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
-				<attribute key="model"/>
+				<attribute key="anchor" type="String">c</attribute>
 			</section>
 		</section>
 		<section name="node">
@@ -79,7 +79,7 @@
 				<attribute key="text" type="String">Eteindre pin 1</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
-				<attribute key="model"/>
+				<attribute key="anchor" type="String">c</attribute>
 			</section>
 		</section>
 		<section name="node">
@@ -99,7 +99,7 @@
 				<attribute key="text" type="String">Allumer pin 1</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
-				<attribute key="model"/>
+				<attribute key="anchor" type="String">c</attribute>
 			</section>
 		</section>
 		<section name="node">
@@ -119,7 +119,7 @@
 				<attribute key="text" type="String">U1 &lt; 30</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
-				<attribute key="model"/>
+				<attribute key="anchor" type="String">c</attribute>
 			</section>
 		</section>
 		<section name="node">
@@ -139,7 +139,7 @@
 				<attribute key="text" type="String">Eteindre pin 2</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
-				<attribute key="model"/>
+				<attribute key="anchor" type="String">c</attribute>
 			</section>
 		</section>
 		<section name="node">
@@ -159,7 +159,7 @@
 				<attribute key="text" type="String">Allumer pin 2</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
-				<attribute key="model"/>
+				<attribute key="anchor" type="String">c</attribute>
 			</section>
 		</section>
 		<section name="node">
@@ -179,7 +179,7 @@
 				<attribute key="text" type="String">U1 &lt; 50</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
-				<attribute key="model"/>
+				<attribute key="anchor" type="String">c</attribute>
 			</section>
 		</section>
 		<section name="node">
@@ -199,7 +199,7 @@
 				<attribute key="text" type="String">Eteindre pin 4</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
-				<attribute key="model"/>
+				<attribute key="anchor" type="String">c</attribute>
 			</section>
 		</section>
 		<section name="node">
@@ -219,7 +219,7 @@
 				<attribute key="text" type="String">Allumer pin 4</attribute>
 				<attribute key="fontSize" type="int">12</attribute>
 				<attribute key="fontName" type="String">Dialog</attribute>
-				<attribute key="model"/>
+				<attribute key="anchor" type="String">c</attribute>
 			</section>
 		</section>
 		<section name="edge">
@@ -245,8 +245,8 @@
 				<attribute key="configuration" type="String">AutoFlippingLabel</attribute>
 				<attribute key="contentWidth" type="double">33.34375</attribute>
 				<attribute key="contentHeight" type="double">18.701171875</attribute>
-				<attribute key="model"/>
-				<attribute key="position"/>
+				<attribute key="model" type="String">six_pos</attribute>
+				<attribute key="position" type="String">tail</attribute>
 			</section>
 		</section>
 		<section name="edge">
@@ -264,8 +264,8 @@
 				<attribute key="configuration" type="String">AutoFlippingLabel</attribute>
 				<attribute key="contentWidth" type="double">28.673828125</attribute>
 				<attribute key="contentHeight" type="double">18.701171875</attribute>
-				<attribute key="model"/>
-				<attribute key="position"/>
+				<attribute key="model" type="String">six_pos</attribute>
+				<attribute key="position" type="String">tail</attribute>
 			</section>
 		</section>
 		<section name="edge">
@@ -283,8 +283,8 @@
 				<attribute key="configuration" type="String">AutoFlippingLabel</attribute>
 				<attribute key="contentWidth" type="double">33.34375</attribute>
 				<attribute key="contentHeight" type="double">18.701171875</attribute>
-				<attribute key="model"/>
-				<attribute key="position"/>
+				<attribute key="model" type="String">six_pos</attribute>
+				<attribute key="position" type="String">tail</attribute>
 			</section>
 		</section>
 		<section name="edge">
@@ -302,8 +302,8 @@
 				<attribute key="configuration" type="String">AutoFlippingLabel</attribute>
 				<attribute key="contentWidth" type="double">28.673828125</attribute>
 				<attribute key="contentHeight" type="double">18.701171875</attribute>
-				<attribute key="model"/>
-				<attribute key="position"/>
+				<attribute key="model" type="String">six_pos</attribute>
+				<attribute key="position" type="String">tail</attribute>
 			</section>
 		</section>
 		<section name="edge">
@@ -321,8 +321,8 @@
 				<attribute key="configuration" type="String">AutoFlippingLabel</attribute>
 				<attribute key="contentWidth" type="double">33.34375</attribute>
 				<attribute key="contentHeight" type="double">18.701171875</attribute>
-				<attribute key="model"/>
-				<attribute key="position"/>
+				<attribute key="model" type="String">six_pos</attribute>
+				<attribute key="position" type="String">tail</attribute>
 			</section>
 		</section>
 		<section name="edge">
@@ -340,8 +340,8 @@
 				<attribute key="configuration" type="String">AutoFlippingLabel</attribute>
 				<attribute key="contentWidth" type="double">28.673828125</attribute>
 				<attribute key="contentHeight" type="double">18.701171875</attribute>
-				<attribute key="model"/>
-				<attribute key="position"/>
+				<attribute key="model" type="String">six_pos</attribute>
+				<attribute key="position" type="String">tail</attribute>
 			</section>
 		</section>
 		<section name="edge">

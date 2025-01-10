@@ -6,40 +6,39 @@ import interpret  # ficher local
 # ========================================================================================
 
 
-def job(path):
+def xml_to_ino(xml_file_path):
     # Charger et analyser le fichier XML
-    tree = ET.parse(path)
+    tree = ET.parse(xml_file_path)
     root = tree.getroot()
 
     # Trouver la section principale du graphe
-    graph = root.find("./section[@name='graph']")
+    graph_section = root.find("./section[@name='graph']")
 
     # Trouver toute les boites et les fleches
-    nodes = graph.findall("./section[@name='node']")
-    edges = graph.findall("./section[@name='edge']")
+    nodes = graph_section.findall("./section[@name='node']")
+    edges = graph_section.findall("./section[@name='edge']")
 
     # Catégoriser les nœudsboites
     start_nodes = []  # Nœuds de type ellipse
     setup_nodes = {}  # Nœuds de type hexagon
-    loop_nodes = {}  # Autres nœuds (dict pour accès rapide par ID)
-    diamond_nodes = {}  # Nœuds conditionnels
+    basic_nodes = {}  # Autres nœuds (dict pour accès rapide par ID)
+    condition_nodes = {}  # Nœuds conditionnels
 
     for node in nodes:
         node_id = node.find("./attribute[@key='id']").text
         node_label = node.find("./attribute[@key='label']").text
         node_type = node.find("./section[@name='graphics']/attribute[@key='type']").text
 
-        # if not node_label:
-        #     raise ValueError("Une case ne peut etre vide !")
-
         if node_type == "ellipse":
             start_nodes.append((node_id, node_label))
         elif node_type == "hexagon":
             setup_nodes[node_id] = node_label
         elif node_type == "diamond":
-            diamond_nodes[node_id] = node_label
+            condition_nodes[node_id] = node_label
+        elif node_type == "rectangle":
+            basic_nodes[node_id] = node_label
         else:
-            loop_nodes[node_id] = node_label
+            print(f'[Warning] le blocs de type: "{node_type}" non gére !')
 
     # Créer les connexions pour le loop
     connections = {}
@@ -62,11 +61,11 @@ def job(path):
                 break
 
     # Convertir les ID en entiers pour le switch
-    id_to_int = {node_id: index + 1 for index, node_id in enumerate(loop_nodes.keys())}
+    id_to_int = {node_id: index + 1 for index, node_id in enumerate(basic_nodes.keys())}
     id_to_int.update(
         {
-            node_id: index + 1 + len(loop_nodes)
-            for index, node_id in enumerate(diamond_nodes.keys())
+            node_id: index + 1 + len(basic_nodes)
+            for index, node_id in enumerate(condition_nodes.keys())
         }
     )
 
@@ -96,7 +95,7 @@ def job(path):
         ino_file.write("  Serial.begin(115200);\n\n")
 
         # trouver et ecrire les pinModes dans le setup
-        pinModes += interpret.search_pinMode(loop_nodes, diamond_nodes)
+        pinModes += interpret.search_pinMode(basic_nodes, condition_nodes)
         for command in pinModes:
             ino_file.write(command)
 
@@ -109,7 +108,7 @@ def job(path):
         ino_file.write("  switch (currentState) {\n")
 
         # Parcourir les nœuds pour le loop
-        for node_id, node_label in loop_nodes.items():
+        for node_id, node_label in basic_nodes.items():
             state_int = id_to_int[node_id]
             ino_file.write(f"    case {state_int}:\n")
             ino_file.write(f'      Serial.println("{node_label}");\n')
@@ -129,7 +128,7 @@ def job(path):
             # ino_file.write("      break;\n")
 
         # Gestion des diamonds (conditions)
-        for node_id, node_label in diamond_nodes.items():
+        for node_id, node_label in condition_nodes.items():
             interpert_node = interpret.interpret_condition(node_label)
             if not interpert_node:
                 raise SyntaxError('Condition non autorisé: "{node_label}"')
@@ -164,5 +163,7 @@ def job(path):
 
         ino_file.write("  }\n")
         ino_file.write("}\n")
+
+        ino_file.close()
 
     print("Le fichier 'ardunio.ino' a été créé avec succès.")
