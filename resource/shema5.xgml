@@ -222,6 +222,26 @@
 				<attribute key="anchor" type="String">c</attribute>
 			</section>
 		</section>
+		<section name="node">
+			<attribute key="id" type="int">11</attribute>
+			<attribute key="label" type="String">Buzz 6</attribute>
+			<section name="graphics">
+				<attribute key="x" type="double">750.0</attribute>
+				<attribute key="y" type="double">420.0</attribute>
+				<attribute key="w" type="double">120.0</attribute>
+				<attribute key="h" type="double">60.0</attribute>
+				<attribute key="type" type="String">rectangle</attribute>
+				<attribute key="raisedBorder" type="boolean">false</attribute>
+				<attribute key="fill" type="String">#FFCC00</attribute>
+				<attribute key="outline" type="String">#000000</attribute>
+			</section>
+			<section name="LabelGraphics">
+				<attribute key="text" type="String">Buzz 6</attribute>
+				<attribute key="fontSize" type="int">12</attribute>
+				<attribute key="fontName" type="String">Dialog</attribute>
+				<attribute key="model"/>
+			</section>
+		</section>
 		<section name="edge">
 			<attribute key="source" type="int">0</attribute>
 			<attribute key="target" type="int">1</attribute>
@@ -362,7 +382,7 @@
 		</section>
 		<section name="edge">
 			<attribute key="source" type="int">4</attribute>
-			<attribute key="target" type="int">7</attribute>
+			<attribute key="target" type="int">11</attribute>
 			<section name="graphics">
 				<attribute key="fill" type="String">#000000</attribute>
 				<attribute key="targetArrow" type="String">standard</attribute>
@@ -430,6 +450,14 @@
 						<attribute key="y" type="double">300.0</attribute>
 					</section>
 				</section>
+			</section>
+		</section>
+		<section name="edge">
+			<attribute key="source" type="int">11</attribute>
+			<attribute key="target" type="int">7</attribute>
+			<section name="graphics">
+				<attribute key="fill" type="String">#000000</attribute>
+				<attribute key="targetArrow" type="String">standard</attribute>
 			</section>
 		</section>
 	</section>

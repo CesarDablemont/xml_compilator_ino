@@ -1,15 +1,14 @@
-void avance() {
+void AVANCE() {
   // allume moteur1 et 2
   Serial.println("Fonction avance");
 }
 
-void stop() {
+void STOP() {
   // eteind moteur1 et 2
   Serial.println("Fonction stop");
 }
 
-float distance(Sensor sensor) {
-
+float distance(ultrasonSensor sensor) {
   // Envoyer une impulsion de 10 microsecondes sur la broche Trigger
   digitalWrite(sensor.trig, LOW);
   delayMicroseconds(2);

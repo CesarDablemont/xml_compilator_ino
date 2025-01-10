@@ -3,7 +3,7 @@ import re  # Pour les regex
 command_wait = ["ATTENDRE"]
 command_input = ["LIRE"]
 command_output = ["ALLUMER", "ETEINDRE", "BUZZ"]
-command_custom = ["stop", "avance"]
+command_custom = ["STOP", "AVANCE"]
 
 # Unités de temps et leurs multiplicateurs
 time_units = {
@@ -11,7 +11,7 @@ time_units = {
     "ms": 1,  # Millisecondes → Millisecondes
 }
 
-sensors = []
+ultrason_sensors = []
 
 
 def interpret_assignment_opperator(node_label):
@@ -21,9 +21,7 @@ def interpret_assignment_opperator(node_label):
         variable = match.group(1)  # Le nom de la variable
         opperator = match.group(2)
         value = match.group(3)  # La valeur après '='
-        return f"{variable} {opperator} {value}"
-
-    # TODO lever l'erreur dans le else
+        return f"{variable} {opperator} {value};"
 
 
 def interpret_test_opperator(node_label):
@@ -31,7 +29,7 @@ def interpret_test_opperator(node_label):
     match = re.search(r"([a-zA-Z0-9_]+)\s*(==|<=|>=|<|>|!=)\s*(.+)", node_label)
     if match:
         variable = match.group(1)  # Le nom de la variable
-        if variable in sensors:
+        if variable in ultrason_sensors:
             variable = f"distance({variable})"
         opperator = match.group(2)
         value = match.group(3)  # La valeur après '='
@@ -39,13 +37,11 @@ def interpret_test_opperator(node_label):
 
 
 # Fonction pour interpréter les commandes spéciales avec macros
-def interpret_command_with_macros(node_label):
+def interpret_basic_command(node_label):
     # Vérification de la syntaxe 'variable ='
     result = interpret_assignment_opperator(node_label)
     if result:
-        return (
-            result + ";\n"
-        )  # Si interpret_variable retourne quelque chose, on le retourne directement
+        return result
 
     parts = node_label.split()
     command = parts[0].upper()
@@ -128,46 +124,16 @@ def interpret_init_variable(setup_nodes):
         params = [p.strip() for p in parts]
         match = re.match(r"([a-zA-Z0-9_]+)\s*=\s*(.+)", node_label)
 
+        # Détection des capteurs ultrason
         if params[0].lower().startswith("ultrason") and len(params) >= 3:
-            match_name = re.search(
-                r"Ultrason\s+([a-zA-Z0-9_]+)", params[0], re.IGNORECASE
-            )
-            if match_name:
-                sensorName = match_name.group(1)
-                sensors.append(sensorName)
-            else:
-                print(f"[Warning] Nom de capteur manquant dans '{node_label}'")
-                continue
-
-            # Récupérer les broches Trig et Echo
-            trigPin = None
-            echoPin = None
-
-            for param in params[1:]:
-                if param.lower().startswith("trig"):
-                    trigPin = int(re.search(r"\d+", param).group())
-                elif param.lower().startswith("echo"):
-                    echoPin = int(re.search(r"\d+", param).group())
-
-            # Vérification et ajout des commandes si tout est OK
-            if trigPin is not None and echoPin is not None:
-                codesList.append(
-                    f"struct Sensor {sensorName} = {{ {trigPin}, {echoPin} }};\n"
-                )
-                pinModes.append(
-                    f"  pinMode({trigPin}, OUTPUT);\n  pinMode({echoPin}, INPUT);\n"
-                )
-            else:
-                print(
-                    f"[Warning] Paramètres 'Trig' ou 'Echo' manquants dans '{node_label}'"
-                )
+            init_ultrason(node_label, ultrason_sensors, codesList, pinModes)
 
         elif match:
             variable = match.group(1)  # Le nom de la variable
             value = match.group(2)  # La valeur après '='
 
             # Détection du type
-            if value.strip() in ["True", "False"]:
+            if value.strip().lower() in ["true", "false"]:
                 var_type = "bool"
             elif value.strip().isdigit():
                 var_type = "int"
@@ -178,8 +144,41 @@ def interpret_init_variable(setup_nodes):
 
         else:
             # Si aucune cas correspond
-            print(
-                f'[Warning] "{node_label}" n\'a pas etait compris et donc non compilé\n'
-            )
+            print(f'[Warning] "{node_label}" n\'a pas etait compris et compilé\n')
 
     return codesList, pinModes
+
+
+def init_ultrason(node_label, ultrason_sensors, codesList, pinModes):
+    parts = node_label.split(",")
+    params = [p.strip() for p in parts]
+    sensorName = None
+    trigPin = None
+    echoPin = None
+
+    # Récupérer le nom du capteur
+    match_name = re.search(r"Ultrason\s+([a-zA-Z0-9_]+)", params[0], re.IGNORECASE)
+    if match_name:
+        sensorName = match_name.group(1)
+        ultrason_sensors.append(sensorName)
+    else:
+        print(f"[Warning] Nom de capteur manquant dans '{node_label}'")
+        return
+
+    # Récupérer les broches Trig et Echo
+    for param in params[1:]:
+        if param.lower().startswith("trig"):
+            trigPin = int(re.search(r"\d+", param).group())
+        elif param.lower().startswith("echo"):
+            echoPin = int(re.search(r"\d+", param).group())
+
+    # Vérification et ajout des commandes si tout est OK
+    if trigPin is not None and echoPin is not None:
+        codesList.append(
+            f"struct ultrasonSensor {sensorName} = {{ {trigPin}, {echoPin} }};\n"
+        )
+        pinModes.append(
+            f"  pinMode({trigPin}, OUTPUT);\n  pinMode({echoPin}, INPUT);\n"
+        )
+    else:
+        print(f"[Warning] Paramètres 'Trig' ou 'Echo' manquants dans '{node_label}'")

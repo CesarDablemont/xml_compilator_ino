@@ -78,9 +78,9 @@ def xml_to_ino(xml_file_path):
         ino_file.write("#define ALLUMER(pin) digitalWrite(pin, HIGH)\n")
         ino_file.write("#define ETEINDRE(pin) digitalWrite(pin, LOW)\n")
         ino_file.write("#define LIRE(pin) digitalRead(pin)\n")
-        ino_file.write("#define BUZZ(pin) tone(pin, 600, 20)\n\n")
+        ino_file.write("#define BUZZ(pin) tone(pin, 600, 3)\n\n")
 
-        ino_file.write("struct Sensor {\n")
+        ino_file.write("struct ultrasonSensor {\n")
         ino_file.write("int trig;\n")
         ino_file.write("int echo;\n")
         ino_file.write("};\n\n")
@@ -112,7 +112,7 @@ def xml_to_ino(xml_file_path):
             state_int = id_to_int[node_id]
             ino_file.write(f"    case {state_int}:\n")
             ino_file.write(f'      Serial.println("{node_label}");\n')
-            interpreted_command = interpret.interpret_command_with_macros(node_label)
+            interpreted_command = interpret.interpret_basic_command(node_label)
             ino_file.write(f"      {interpreted_command}\n")
             if node_id in connections:
                 for target, label in connections[node_id]:
@@ -163,7 +163,6 @@ def xml_to_ino(xml_file_path):
 
         ino_file.write("  }\n")
         ino_file.write("}\n")
-
         ino_file.close()
 
     print("Le fichier 'ardunio.ino' a été créé avec succès.")
