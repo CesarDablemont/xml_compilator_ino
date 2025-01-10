@@ -1,17 +1,9 @@
 import re  # Pour les regex
 
-# Dictionnaire de fonction
-keyword_to_function = {
-    # fonction ardunio :
-    "Attendre": "ATTENDRE",
-    "Allumer": "ALLUMER",  # (digital)
-    "Eteindre": "ETEINDRE",  # (digital)
-    "Lire": "LIRE",  # (digital)
-    "Buzz": "BUZZ",  # (digital)
-    # fonction custom :
-    "Stop": "stop",
-    "Avance": "avance",
-}
+command_wait = ["ATTENDRE"]
+command_input = ["LIRE"]
+command_output = ["ALLUMER", "ETEINDRE", "BUZZ"]
+command_custom = ["stop", "avance"]
 
 # Unités de temps et leurs multiplicateurs
 time_units = {
@@ -56,27 +48,25 @@ def interpret_command_with_macros(node_label):
         )  # Si interpret_variable retourne quelque chose, on le retourne directement
 
     parts = node_label.split()
-    command = parts[0]
+    command = parts[0].upper()
     params = parts[1:] if len(parts) > 1 else []
 
-    if command in keyword_to_function:
-        macro = keyword_to_function[command]
+    if command in command_wait and params:
+        match = re.match(r"(\d+)([a-zA-Z]+)", params[0])
+        if match:
+            value = int(match.group(1))
+            unit = match.group(2)
+            multiplier = time_units.get(unit, 1)
+            value *= multiplier
+            return f"{command}({value});"
 
-        if macro == "ATTENDRE" and params:
-            match = re.match(r"(\d+)([a-zA-Z]+)", params[0])
-            if match:
-                value = int(match.group(1))
-                unit = match.group(2)
-                multiplier = time_units.get(unit, 1)
-                value *= multiplier
-                return f"{macro}({value});"
+    elif command in command_output and len(params) >= 1:
+        pin = params[1] if params[0].lower() == "pin" else params[0]
+        return f"{command}({pin});"
 
-        elif macro in ["ALLUMER", "ETEINDRE", "BUZZ"] and len(params) >= 1:
-            pin = params[1] if params[0].lower() == "pin" else params[0]
-            return f"{macro}({pin});"
+    elif command in command_custom:
+        return f"{command}();"
 
-        elif macro in ["stop", "avance"]:
-            return f"{macro}();"
     else:
         print(f"[Warning] Commande inconnue: {node_label}")
         return f"// Commande inconnue: {node_label}"
@@ -90,14 +80,12 @@ def interpret_condition(node_label):
 
     # Vérifier si c'est une macro de commande
     parts = node_label.split()
-    command = parts[0]
+    command = parts[0].upper()
     params = parts[1:] if len(parts) > 1 else []
 
-    if command in keyword_to_function:
-        macro = keyword_to_function[command]
-        if macro == "LIRE" and len(params) >= 1:
-            pin = params[1] if params[0].lower() == "pin" else params[0]
-            return f"{macro}({pin})"
+    if command in command_input and len(params) >= 1:
+        pin = params[1] if params[0].lower() == "pin" else params[0]
+        return f"{command}({pin})"
 
     # Par défaut, renvoyer tel quel
     return node_label
@@ -108,31 +96,25 @@ def search_pinMode(basic_nodes, condition_nodes):
 
     for node_id, node_label in basic_nodes.items():
         parts = node_label.split()
-        command = parts[0]
+        command = parts[0].upper()
         params = parts[1:] if len(parts) > 1 else []
 
-        if command in keyword_to_function:
-            macro = keyword_to_function[command]
-
-            if macro in ["ALLUMER", "ETEINDRE", "BUZZ"] and len(params) >= 1:
-                pin = params[1] if params[0].lower() == "pin" else params[0]
-                command = f"  pinMode({pin}, OUTPUT);\n"
-                if not command in commandList:
-                    commandList.append(command)
+        if command in command_output and len(params) >= 1:
+            pin = params[1] if params[0].lower() == "pin" else params[0]
+            command = f"  pinMode({pin}, OUTPUT);\n"
+            if not command in commandList:
+                commandList.append(command)
 
     for node_id, node_label in condition_nodes.items():
         parts = node_label.split()
-        command = parts[0]
+        command = parts[0].upper()
         params = parts[1:] if len(parts) > 1 else []
 
-        if command in keyword_to_function:
-            macro = keyword_to_function[command]
-
-            if macro == "LIRE" and len(params) >= 1:
-                pin = params[1] if params[0].lower() == "pin" else params[0]
-                command = f"  pinMode({pin}, INPUT_PULLUP);\n"
-                if not command in commandList:
-                    commandList.append(command)
+        if command in command_input and len(params) >= 1:
+            pin = params[1] if params[0].lower() == "pin" else params[0]
+            command = f"  pinMode({pin}, INPUT_PULLUP);\n"
+            if not command in commandList:
+                commandList.append(command)
 
     return commandList
 
